@@ -1,0 +1,47 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+plugins {
+   id 'groovy'
+   id 'java-gradle-plugin'
+   id 'maven-publish'
+
+}
+
+group "com.github.sybrin-innovations"
+version System.getProperty("version")
+
+repositories {
+   mavenCentral()
+}
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+dependencies {
+   implementation gradleApi()
+   implementation localGroovy()
+}
+
+gradlePlugin{
+   plugins{
+      simplePlugin{
+         id = 'com.github.sybrin-innovations.sybrinpublishconfig'
+         implementationClass = 'com.github.sybrininnovations.plugin.SybrinPublishConfigPlugin'
+      }
+   }
+}
+
+
+
+publishing {
+   repositories {
+      maven {
+         name = 'GitHubPackages'
+         url = project.uri('https://maven.pkg.github.com/sybrin-innovations/gradleTest1')
+         credentials {
+            username System.getProperty("username")
+            password System.getProperty("password")
+         }
+      }
+   }
+
+}
